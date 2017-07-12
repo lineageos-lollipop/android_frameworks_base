@@ -511,6 +511,7 @@ class WindowStateAnimator {
             if (WindowManagerService.SHOW_TRANSACTIONS) WindowManagerService.logSurface(mWin,
                     "HIDE (performLayout)", null);
             if (mSurfaceControl != null) {
+                mService.updateNonSystemOverlayWindowsVisibilityIfNeeded(mWin, false);                
                 mSurfaceShown = false;
                 try {
                     mSurfaceControl.hide();
@@ -1849,6 +1850,8 @@ class WindowStateAnimator {
                 if (mSurfaceControlBlur != null) {
                     mSurfaceControlBlur.show();
                 }
+
+                mService.updateNonSystemOverlayWindowsVisibilityIfNeeded(mWin, true);
                 if (mWin.mTurnOnScreen) {
                     if (DEBUG_VISIBILITY) Slog.v(TAG,
                             "Show surface turning screen on: " + mWin);
