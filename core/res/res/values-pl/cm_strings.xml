@@ -143,6 +143,7 @@
   <string name="app_ops_read_sms">czytanie SMS-ów</string>
   <string name="app_ops_receive_sms">odbieranie SMS-ów</string>
   <string name="app_ops_record_audio">nagrywanie dźwięku</string>
+  <string name="app_ops_scan_wifi">dostęp do listy sieci Wi-Fi</string>
   <string name="app_ops_send_mms">wysyłanie MMS-ów</string>
   <string name="app_ops_send_sms">wysyłanie SMS-ów</string>
   <string name="app_ops_start_at_bootup">uruchamianie podczas włączania urządzenia</string>

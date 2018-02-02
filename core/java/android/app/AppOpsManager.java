@@ -888,7 +888,7 @@ public class AppOpsManager {
             AppOpsManager.MODE_ALLOWED,
             AppOpsManager.MODE_ALLOWED,
             AppOpsManager.MODE_ALLOWED,
-            AppOpsManager.MODE_ALLOWED,
+            AppOpsManager.MODE_ASK,     // OP_WIFI_SCAN
             AppOpsManager.MODE_ALLOWED,
             AppOpsManager.MODE_ALLOWED,
             AppOpsManager.MODE_ALLOWED,

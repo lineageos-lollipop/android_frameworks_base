@@ -144,6 +144,7 @@
   <string name="app_ops_read_sms">lire vos messages SMS</string>
   <string name="app_ops_receive_sms">recevoir un SMS</string>
   <string name="app_ops_record_audio">enregistrer un son</string>
+  <string name="app_ops_scan_wifi">obtenir la liste des réseaux wifi</string>
   <string name="app_ops_send_mms">envoyer un MMS</string>
   <string name="app_ops_send_sms">envoyer un SMS</string>
   <string name="app_ops_start_at_bootup">démarrer avec le système</string>

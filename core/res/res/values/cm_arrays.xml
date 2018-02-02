@@ -52,7 +52,7 @@
         <item>@string/app_ops_modify_call_log</item>
         <item>@string/app_ops_read_calendar</item>
         <item>@string/app_ops_modify_calendar</item>
-        <item>@string/app_ops_access_location</item>
+        <item>@string/app_ops_scan_wifi</item>
         <item>@string/app_ops_post_notification</item>
         <item>@string/app_ops_access_location</item>
         <item>@string/app_ops_make_phone_call</item>

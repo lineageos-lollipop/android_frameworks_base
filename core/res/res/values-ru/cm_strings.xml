@@ -143,6 +143,7 @@
   <string name="app_ops_read_sms">считать SMS-сообщения</string>
   <string name="app_ops_receive_sms">получить SMS-сообщение</string>
   <string name="app_ops_record_audio">записать аудио</string>
+  <string name="app_ops_scan_wifi">доступ к списку сетей Wi-Fi</string>
   <string name="app_ops_send_mms">отправить MMS-сообщение</string>
   <string name="app_ops_send_sms">отправить SMS-сообщение</string>
   <string name="app_ops_start_at_bootup">назначить запуск при включении устройства</string>

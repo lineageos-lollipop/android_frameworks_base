@@ -173,6 +173,7 @@
     <string name="app_ops_read_sms">read your SMS messages</string>
     <string name="app_ops_receive_sms">receive an SMS message</string>
     <string name="app_ops_record_audio">record audio</string>
+    <string name="app_ops_scan_wifi">see all available WiFi networks</string>
     <string name="app_ops_send_mms">send an MMS message</string>
     <string name="app_ops_send_sms">send an SMS message</string>
     <string name="app_ops_start_at_bootup">start at power up</string>
