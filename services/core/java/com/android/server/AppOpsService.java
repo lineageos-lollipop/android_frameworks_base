@@ -1532,6 +1532,13 @@ public class AppOpsService extends IAppOpsService.Stub {
     }
 
     private int getDefaultMode(int code, int uid, String packageName) {
+        // awl
+        // hard-coded privileged packages: in order to get out of real troubles with AppOpsManager.MODE_ASK
+        // cf. Change-Id: I478d6a6783a4c06fa7ad01a96c413290b232636c
+        if (uid == android.os.Process.SYSTEM_UID || "com.android.systemui".equals(packageName)) {
+            return AppOpsManager.MODE_ALLOWED;
+        }
+        // awl
         int mode = AppOpsManager.opToDefaultMode(code,
                 isStrict(code, uid, packageName));
         if (AppOpsManager.isStrictOp(code) && mPolicy != null) {
