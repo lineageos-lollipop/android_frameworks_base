@@ -1532,13 +1532,27 @@ public class AppOpsService extends IAppOpsService.Stub {
     }
 
     private int getDefaultMode(int code, int uid, String packageName) {
-        // awl
-        // hard-coded privileged packages: in order to get out of real troubles with AppOpsManager.MODE_ASK
+        // awl14
+        // hard-coded privileged packages: in order to get out of real troubles 
+        // with AppOpsManager.MODE_ASK
         // cf. Change-Id: I478d6a6783a4c06fa7ad01a96c413290b232636c
+
+        // 1st check: Skip uid 1000 and systemui
         if (uid == android.os.Process.SYSTEM_UID || "com.android.systemui".equals(packageName)) {
             return AppOpsManager.MODE_ALLOWED;
         }
-        // awl
+        // 2nd check: Skip apps signed with platform key, except for 'root' 
+        if (code != AppOpsManager.OP_SU) {
+            try {
+                int match = ActivityThread.getPackageManager().checkSignatures("android", packageName);
+                if (match >= PackageManager.SIGNATURE_MATCH) {
+                    return AppOpsManager.MODE_ALLOWED;
+                }
+            } catch (RemoteException re) {
+                Log.e(TAG, "AppOps getDefaultMode: Can't talk to PM f. Sig.Check", re);
+            }
+        }
+        // end
         int mode = AppOpsManager.opToDefaultMode(code,
                 isStrict(code, uid, packageName));
         if (AppOpsManager.isStrictOp(code) && mPolicy != null) {
