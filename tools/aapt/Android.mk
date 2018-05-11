@@ -62,8 +62,8 @@ aaptHostLdLibs :=
 aaptHostStaticLibs := \
     libandroidfw \
     libpng \
-    liblog \
     libutils \
+    liblog \
     libcutils \
     libexpat \
     libziparchive-host
