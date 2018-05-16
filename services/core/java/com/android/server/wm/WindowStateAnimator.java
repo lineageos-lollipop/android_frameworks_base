@@ -2130,4 +2130,7 @@ class WindowStateAnimator {
         }
     }
 
+    boolean getShown() {
+      return mSurfaceShown;
+    }
 }
