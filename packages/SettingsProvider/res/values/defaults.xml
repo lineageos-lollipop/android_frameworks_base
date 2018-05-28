@@ -219,7 +219,7 @@
     <integer name="def_lock_screen_show_notifications">1</integer>
 
     <!-- Default for Settings.Secure.LOCK_SCREEN_ALLOW_PRIVATE_NOTIFICATIONS -->
-    <bool name="def_lock_screen_allow_private_notifications">true</bool>
+    <bool name="def_lock_screen_allow_private_notifications">false</bool>
 
     <!-- Default for Settings.Global.SEND_ACTION_APP_ERROR -->
     <integer name="def_send_action_app_error">0</integer>
