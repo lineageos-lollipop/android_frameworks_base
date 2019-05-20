@@ -16,6 +16,8 @@
 
 package com.android.vpndialogs;
 
+import static android.view.WindowManager.LayoutParams.PRIVATE_FLAG_HIDE_NON_SYSTEM_OVERLAY_WINDOWS;
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -78,6 +80,7 @@ public class ConfirmDialog extends AlertActivity
             setupAlert();
 
             getWindow().setCloseOnTouchOutside(false);
+            getWindow().addPrivateFlags(PRIVATE_FLAG_HIDE_NON_SYSTEM_OVERLAY_WINDOWS);
             mButton = mAlert.getButton(DialogInterface.BUTTON_POSITIVE);
             mButton.setFilterTouchesWhenObscured(true);
         } catch (Exception e) {
