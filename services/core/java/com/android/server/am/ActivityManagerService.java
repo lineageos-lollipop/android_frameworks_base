@@ -3825,9 +3825,9 @@ public final class ActivityManagerService extends ActivityManagerNative
                 false, ALLOW_FULL_ONLY, "startActivityInPackage", null);
 
         // TODO: Switch to user app stacks here.
-        int ret = mStackSupervisor.startActivityMayWait(null, uid, callingPackage, intent,
-                resolvedType, null, null, resultTo, resultWho, requestCode, startFlags,
-                null, null, null, options, userId, container, inTask);
+        int ret = mStackSupervisor.startActivityMayWait(null, uid, ActivityStackSupervisor.PID_NULL, uid,
+                callingPackage, intent, resolvedType, null, null, resultTo, resultWho, requestCode,
+                startFlags, null, null, null, options, userId, container, inTask);
         return ret;
     }
 
@@ -3848,11 +3848,19 @@ public final class ActivityManagerService extends ActivityManagerNative
             Intent[] intents, String[] resolvedTypes, IBinder resultTo,
             Bundle options, int userId) {
 
+        return startActivitiesInPackage(uid, ActivityStackSupervisor.PID_NULL, UserHandle.USER_NULL,
+                callingPackage, intents, resolvedTypes, resultTo, options, userId);
+    }
+
+    final int startActivitiesInPackage(int uid, int realCallingPid, int realCallingUid,
+                                       String callingPackage, Intent[] intents, String[] resolvedTypes,
+                                       IBinder resultTo, Bundle options, int userId) {
+
         userId = handleIncomingUser(Binder.getCallingPid(), Binder.getCallingUid(), userId,
                 false, ALLOW_FULL_ONLY, "startActivityInPackage", null);
         // TODO: Switch to user app stacks here.
-        int ret = mStackSupervisor.startActivities(null, uid, callingPackage, intents, resolvedTypes,
-                resultTo, options, userId);
+        int ret = mStackSupervisor.startActivities(null, uid, realCallingPid, realCallingUid,
+                callingPackage, intents, resolvedTypes, resultTo, options, userId);
         return ret;
     }
 

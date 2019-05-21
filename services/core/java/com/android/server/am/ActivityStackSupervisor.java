@@ -117,6 +117,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class ActivityStackSupervisor implements DisplayListener {
+    public static final int PID_NULL = 0;
+
     static final boolean DEBUG = ActivityManagerService.DEBUG || false;
     static final boolean DEBUG_ADD_REMOVE = DEBUG || false;
     static final boolean DEBUG_APP = DEBUG || false;
@@ -865,6 +867,21 @@ public final class ActivityStackSupervisor implements DisplayListener {
             IBinder resultTo, String resultWho, int requestCode, int startFlags,
             ProfilerInfo profilerInfo, WaitResult outResult, Configuration config,
             Bundle options, int userId, IActivityContainer iContainer, TaskRecord inTask) {
+
+        return startActivityMayWait(caller, callingUid, PID_NULL, UserHandle.USER_NULL,
+             callingPackage, intent, resolvedType, voiceSession, voiceInteractor, resultTo,
+             resultWho, requestCode, startFlags, profilerInfo, outResult, config, options,
+             userId, iContainer, inTask);
+    }
+
+    final int startActivityMayWait(IApplicationThread caller, int callingUid,
+            int requestRealCallingPid, int requestRealCallingUid,
+            String callingPackage, Intent intent, String resolvedType,
+            IVoiceInteractionSession voiceSession, IVoiceInteractor voiceInteractor,
+            IBinder resultTo, String resultWho, int requestCode, int startFlags,
+            ProfilerInfo profilerInfo, WaitResult outResult, Configuration config,
+            Bundle options, int userId, IActivityContainer iContainer, TaskRecord inTask) {
+
         // Refuse possible leaked file descriptors
         if (intent != null && intent.hasFileDescriptors()) {
             throw new IllegalArgumentException("File descriptors passed in Intent");
@@ -880,8 +897,14 @@ public final class ActivityStackSupervisor implements DisplayListener {
 
         ActivityContainer container = (ActivityContainer)iContainer;
         synchronized (mService) {
-            final int realCallingPid = Binder.getCallingPid();
-            final int realCallingUid = Binder.getCallingUid();
+
+            final int realCallingPid = requestRealCallingPid != PID_NULL
+                ? requestRealCallingPid
+                : Binder.getCallingPid();
+            final int realCallingUid = requestRealCallingUid != UserHandle.USER_NULL
+                ? requestRealCallingUid
+                : Binder.getCallingUid();
+
             int callingPid;
             if (callingUid >= 0) {
                 callingPid = -1;
@@ -1031,6 +1054,15 @@ public final class ActivityStackSupervisor implements DisplayListener {
     final int startActivities(IApplicationThread caller, int callingUid, String callingPackage,
             Intent[] intents, String[] resolvedTypes, IBinder resultTo,
             Bundle options, int userId) {
+        return startActivities(caller, callingUid, PID_NULL, UserHandle.USER_NULL, callingPackage,
+             intents, resolvedTypes, resultTo, options, userId);
+    }
+
+    final int startActivities(IApplicationThread caller, int callingUid,
+            int incomingRealCallingPid, int incomingRealCallingUid, String callingPackage,
+            Intent[] intents, String[] resolvedTypes, IBinder resultTo,
+            Bundle options, int userId) {
+
         if (intents == null) {
             throw new NullPointerException("intents is null");
         }
@@ -1041,13 +1073,20 @@ public final class ActivityStackSupervisor implements DisplayListener {
             throw new IllegalArgumentException("intents are length different than resolvedTypes");
         }
 
+        final int realCallingPid = incomingRealCallingPid != PID_NULL
+                     ? incomingRealCallingPid
+                     : Binder.getCallingPid();
+
+        final int realCallingUid = incomingRealCallingUid != UserHandle.USER_NULL
+                     ? incomingRealCallingUid
+                     : Binder.getCallingUid();
 
         int callingPid;
         if (callingUid >= 0) {
             callingPid = -1;
         } else if (caller == null) {
-            callingPid = Binder.getCallingPid();
-            callingUid = Binder.getCallingUid();
+            callingPid = realCallingPid;
+            callingUid = realCallingUid;
         } else {
             callingPid = callingUid = -1;
         }

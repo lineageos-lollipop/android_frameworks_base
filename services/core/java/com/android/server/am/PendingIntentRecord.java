@@ -222,6 +222,9 @@ final class PendingIntentRecord extends IIntentSender.Stub {
                 finalIntent.setFlags((finalIntent.getFlags()&~flagsMask) | flagsValues);
                 
                 final long origId = Binder.clearCallingIdentity();
+
+                final int callingUid = Binder.getCallingUid();
+                final int callingPid = Binder.getCallingPid();
                 
                 boolean sendFinish = finishedReceiver != null;
                 int userId = key.userId;
@@ -249,8 +252,9 @@ final class PendingIntentRecord extends IIntentSender.Stub {
                                 }
                                 allIntents[allIntents.length-1] = finalIntent;
                                 allResolvedTypes[allResolvedTypes.length-1] = resolvedType;
-                                owner.startActivitiesInPackage(uid, key.packageName, allIntents,
-                                        allResolvedTypes, resultTo, options, userId);
+                                owner.startActivitiesInPackage(uid, callingPid, callingUid,
+                                        key.packageName, allIntents, allResolvedTypes, resultTo,
+                                        options, userId);
                             } else {
                                 owner.startActivityInPackage(uid, key.packageName, finalIntent,
                                         resolvedType, resultTo, resultWho, requestCode, 0,
