@@ -69,6 +69,7 @@ import android.util.ArrayMap;
 
 import com.android.internal.R;
 import android.Manifest;
+import android.annotation.Nullable;
 import android.app.ComposedIconInfo;
 import android.content.res.AssetManager;
 import android.content.res.ThemeConfig;
@@ -12237,9 +12238,9 @@ public class PackageManagerService extends IPackageManager.Stub {
      */
     private boolean deleteSystemPackageLI(PackageSetting newPs,
             int[] allUserHandles, boolean[] perUserInstalled,
-            int flags, PackageRemovedInfo outInfo, boolean writeSettings) {
+            int flags, @Nullable PackageRemovedInfo outInfo, boolean writeSettings) {
         final boolean applyUserRestrictions
-                = (allUserHandles != null) && (perUserInstalled != null);
+                = (allUserHandles != null) && outInfo != null && (perUserInstalled != null);
         PackageSetting disabledPs = null;
         // Confirm if the system package has been updated
         // An updated system app can be deleted. This will also have to restore
@@ -12264,8 +12265,10 @@ public class PackageManagerService extends IPackageManager.Stub {
                 }
             }
         }
-        // Delete the updated package
-        outInfo.isRemovedPackageSystemUpdate = true;
+        if (outInfo != null) {
+            // Delete the updated package
+            outInfo.isRemovedPackageSystemUpdate = true;
+        }
         if (disabledPs.versionCode < newPs.versionCode) {
             // Delete data for downgrades
             flags &= ~PackageManager.DELETE_KEEP_DATA;
