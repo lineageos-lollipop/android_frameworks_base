@@ -2284,6 +2284,10 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     attrs.privateFlags &= ~WindowManager.LayoutParams.PRIVATE_FLAG_KEYGUARD;
                 }
                 break;
+            case TYPE_TOAST:
+                // Toasts can't be clickable
+                attrs.flags |= WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
+                break;
         }
 
         if (attrs.type != TYPE_STATUS_BAR) {
