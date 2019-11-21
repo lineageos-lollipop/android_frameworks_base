@@ -22,7 +22,6 @@ import android.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.function.Consumer;
 
 /**
  * SQL Tokenizer specialized to extract tokens from SQL (snippets).
@@ -76,7 +75,8 @@ public class SQLiteTokenizer {
      */
     public static List<String> tokenize(@Nullable String sql, int options) {
         final ArrayList<String> res = new ArrayList<>();
-        tokenize(sql, options, res::add);
+        tokenize(sql, options, new Consumer<String>() {
+            public void accept(String t) { res.add(t); }});
         return res;
     }
 

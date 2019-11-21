@@ -712,15 +712,20 @@ public class SQLiteQueryBuilder
     private void enforceStrictGrammar(@Nullable String selection, @Nullable String groupBy,
             @Nullable String having, @Nullable String sortOrder, @Nullable String limit) {
         SQLiteTokenizer.tokenize(selection, SQLiteTokenizer.OPTION_NONE,
-                this::enforceStrictGrammarWhereHaving);
+            new Consumer<String>() { public void accept(String t) {
+                enforceStrictGrammarWhereHaving(t); }});
         SQLiteTokenizer.tokenize(groupBy, SQLiteTokenizer.OPTION_NONE,
-                this::enforceStrictGrammarGroupBy);
+            new Consumer<String>() { public void accept(String t) {
+                enforceStrictGrammarGroupBy(t); }});
         SQLiteTokenizer.tokenize(having, SQLiteTokenizer.OPTION_NONE,
-                this::enforceStrictGrammarWhereHaving);
+            new Consumer<String>() { public void accept(String t) {
+                enforceStrictGrammarWhereHaving(t); }});
         SQLiteTokenizer.tokenize(sortOrder, SQLiteTokenizer.OPTION_NONE,
-                this::enforceStrictGrammarOrderBy);
+            new Consumer<String>() { public void accept(String t) {
+                enforceStrictGrammarOrderBy(t); }});
         SQLiteTokenizer.tokenize(limit, SQLiteTokenizer.OPTION_NONE,
-                this::enforceStrictGrammarLimit);
+            new Consumer<String>() { public void accept(String t) {
+                enforceStrictGrammarLimit(t); }});
     }
 
     private void enforceStrictGrammarWhereHaving(@NonNull String token) {
