@@ -5463,6 +5463,12 @@ public class AudioService extends IAudioService.Stub {
         return mMediaFocusControl.getCurrentAudioFocus();
     }
 
+    // DOLBY_DAP
+    public boolean isAppInFocus(String name) {
+        return mMediaFocusControl.isAppInFocus(name);
+    }
+    // DOLBY_END
+
     //==========================================================================================
     // Device orientation
     //==========================================================================================

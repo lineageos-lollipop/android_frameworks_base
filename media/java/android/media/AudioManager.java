@@ -2676,6 +2676,25 @@ public class AudioManager {
         return status;
     }
 
+    // DOLBY_DAP
+    /**
+     *  @hide
+     *  Check if the specified App obtains the focus.
+     *  @param packageName the package name of the App.
+     *  @return ture if the App obtains the focus.
+     */
+    public boolean isAppInFocus(String packageName) {
+        boolean isFocus = false;
+        IAudioService service = getService();
+        try {
+            isFocus = service.isAppInFocus(packageName);
+        } catch (RemoteException e) {
+            Log.e(TAG, "Can't call isAppInFocus() on AudioService due to " + e);
+        }
+        return isFocus;
+    }
+    // DOLBY_END
+
     //====================================================================
     // Remote Control
 
